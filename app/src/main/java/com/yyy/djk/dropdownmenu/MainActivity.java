@@ -2,9 +2,9 @@ package com.yyy.djk.dropdownmenu;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         //init context view
         RelativeLayout mContentView = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.activity_jaaidorg_content, null);
         RecyclerView mRlvJaaidOrg = (RecyclerView) mContentView.findViewById(R.id.rlv_jaaidorg);
-        mContentView.setGravity(Gravity.RIGHT);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         mContentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initContentView(mRlvJaaidOrg);
 
@@ -153,8 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             JaaidOrgRlvAdapter rlvAdapter = new JaaidOrgRlvAdapter(orgVOs, this);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            GridLayoutManager linearLayoutManager = new GridLayoutManager(this,1);
             mRlvJaaidOrg.setLayoutManager(linearLayoutManager);
             mRlvJaaidOrg.setAdapter(rlvAdapter);
         }
