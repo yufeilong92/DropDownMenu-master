@@ -2,13 +2,16 @@ package com.yyy.djk.dropdownmenu;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yyydjk.library.DropDownMenu;
@@ -122,15 +125,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //init context view
-        TextView contentView = new TextView(this);
-        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        contentView.setText("内容显示区域");
-        contentView.setGravity(Gravity.CENTER);
-        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+//        TextView contentView = new TextView(this);
+//        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//        contentView.setText("内容显示区域");
+//        contentView.setGravity(Gravity.RIGHT);
+//        contentView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        //init context view
+        RelativeLayout mContentView = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.activity_jaaidorg_content, null);
+        RecyclerView mRlvJaaidOrg = (RecyclerView) mContentView.findViewById(R.id.rlv_jaaidorg);
+        mContentView.setGravity(Gravity.RIGHT);
+        mContentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        initContentView(mRlvJaaidOrg);
 
         //init dropdownview
-        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
+        mDropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, mContentView);
     }
+
+
+        private void initContentView(RecyclerView mRlvJaaidOrg) {
+            List<JaaidOrgVO> orgVOs = new ArrayList<>();
+            for (int i = 0; i < 50; i++) {
+                JaaidOrgVO jaaidOrgVO = new JaaidOrgVO();
+                jaaidOrgVO.setName("贵州省贵阳市法律援助中心");
+                jaaidOrgVO.setAddress("贵阳市都司路科技馆旁");
+                jaaidOrgVO.setTelephone("0851-5802217");
+                orgVOs.add(jaaidOrgVO);
+            }
+
+            JaaidOrgRlvAdapter rlvAdapter = new JaaidOrgRlvAdapter(orgVOs, this);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            mRlvJaaidOrg.setLayoutManager(linearLayoutManager);
+            mRlvJaaidOrg.setAdapter(rlvAdapter);
+        }
 
     @Override
     public void onBackPressed() {
