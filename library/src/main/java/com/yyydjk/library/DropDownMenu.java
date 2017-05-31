@@ -175,6 +175,17 @@ public class DropDownMenu extends LinearLayout {
         }
     }
 
+       /**
+     * 设置标题
+     *
+     * @param text
+     */
+    public void setTabText(int index,String text) {
+        if (index != -1) {
+            ((TextView) tabMenuView.getChildAt(index*2)).setText(text);
+        }
+    }
+    
     /**
      * 改变tab文字
      *
